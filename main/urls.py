@@ -24,6 +24,6 @@ from app_lesson_4.views import index_1
 #хранит ссылки, а path() - создает ссылку и указывает views
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('home/', include('add.urls')),
+    path('', include('add.urls')),
     path('lesson_4', index_1)
 ]
