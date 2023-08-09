@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.html import format_html
+from django.contrib.auth import get_user_model
+
+User =get_user_model()
 class Advert(models.Model):
     title = models.CharField('Заголовок', max_length=128)
     description = models.TextField('Описание')
@@ -7,6 +10,11 @@ class Advert(models.Model):
     auction = models.BooleanField('Торг', help_text='Отметьте, если торг уместен')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    user =models.ForeignKey(User, verbose_name='Пользователь', on_delete= models.CASCADE)
+    image = models.ImageField('Изображение', upload_to='adverts/', default='static/img/pic.png')
+
+
+
     
     def date_of_creation(self):
         from django.utils import timezone
@@ -24,8 +32,10 @@ class Advert(models.Model):
               '<span style="color: pink; font-weight: bold;">Сегодня в {}</span>', updated_time
             )
         return self.updated_at.strftime('%d.%m.%Y в %H:%M:%S')
-
-
+    
+    def mini_img(self):
+        images=self.image
+        return format_html('<img src="{}" width="100" height="100" />', images)
     
     def __str__(self):
         return f'{self.id}, {self.title}, {self.price}'

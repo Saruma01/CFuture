@@ -3,11 +3,11 @@ from .models import Advert
 # Register your models here.
 class AdvertAdmin(admin.ModelAdmin):
     list_filter = ['auction','created_at']
-    list_display= ['id', 'title', 'description', 'price','auction', 'date_of_creation', 'updates_date']
+    list_display= ['id', 'title', 'description', 'price','auction', 'date_of_creation', 'updates_date', 'mini_img']
     actions = ['make_auction_as_true','make_auction_as_false']
     fieldsets = (
         ('Общее', {
-            'fields':('title', 'description')
+            'fields':('title', 'description', 'user', 'image')
         }),
         ('Финансы',{
             'fields':('price', 'auction'),
@@ -21,5 +21,7 @@ class AdvertAdmin(admin.ModelAdmin):
     @admin.action(description='Убрать возможность торга')
     def make_auction_as_false(self, request, queryset):
         queryset.update(auction=False)    
+    
+
 
 admin.site.register(Advert, AdvertAdmin)
