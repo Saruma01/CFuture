@@ -34,8 +34,8 @@ class Advert(models.Model):
         return self.updated_at.strftime('%d.%m.%Y в %H:%M:%S')
     
     def mini_img(self):
-        images=self.image
-        return format_html('<img src="{}" width="100" height="100" />', images)
+       if self.image:
+           return format_html('<img src="{url}" style="max-width: 100px; max-height: 100px;">', url=self.image.url)
     
     def __str__(self):
         return f'{self.id}, {self.title}, {self.price}'
